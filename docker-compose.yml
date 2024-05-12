@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  apache:
+    build: ./apache
+    ports:
+      - "8085:80"
+    volumes:
+      - ./webapp:/usr/local/apache2/htdocs/
+    depends_on:
+      - db
+    networks:
+      - app-network
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=my_database
+
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: my_database
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+volumes:
+  dbdata:
+
+networks:
+  app-network:
