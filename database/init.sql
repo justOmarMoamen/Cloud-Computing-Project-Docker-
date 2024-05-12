@@ -17,4 +17,5 @@ CREATE TABLE IF NOT EXISTS students (
 INSERT INTO students (name, age, cgpa, student_id) VALUES
     ('Omar Moamen Ahmed', 25, 3.78, 'ABC123'),
     ('Marwan Gaber', 22, 3.55, 'DEF456'),
-    ('Hadir Amr', 28, 3.60, 'GHI789');
+    ('Hadir Amr', 28, 3.60, 'GHI789'),
+    ('Farida', 30, 3.44, 'JKL123');

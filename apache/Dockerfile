@@ -13,4 +13,4 @@ COPY ./conf/php.conf /usr/local/apache2/conf/php.conf
 COPY ./webapp /usr/local/apache2/htdocs/
 
 # Ensure Apache is configured to run with PHP
-RUN echo "Include conf/php.conf" >> /usr/local/apache2/conf/httpd.conf
+RUN echo "Include /usr/local/apache2/conf/php.conf" >> /usr/local/apache2/conf/httpd.conf

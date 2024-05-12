@@ -29,26 +29,21 @@
 <h1>Students List</h1>
 
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "my_datebase";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'config.php';
 
 $sql = "SELECT id, name, age, cgpa, student_id FROM students";
 $result = $conn->query($sql);
 
+if ($result) {
+    echo "Query executed successfully<br>";
+} else {
+    echo "Error executing query: " . $conn->error;
+}
+
 if ($result->num_rows > 0) {
     echo "<table><tr><th>ID</th><th>Name</th><th>Age</th><th>CGPA</th><th>Student ID</th></tr>";
     while($row = $result->fetch_assoc()) {
-        echo "<tr><td>" . $row["id"]. "</td><td>" . $row["name"]. "</td><td>" . $row["age"]. "</td><td>" . $row["cgpa"]. "</td><td>" . $row["student_id"]. "</td></tr>";
+        echo "<tr><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["age"] . "</td><td>" . $row["cgpa"] . "</td><td>" . $row["student_id"] . "</td></tr>";
     }
     echo "</table>";
 } else {
