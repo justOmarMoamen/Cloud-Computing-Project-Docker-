@@ -62,7 +62,7 @@
             $id = $_POST["id"];
 
             // SQL to insert data into the database
-            $sql = "INSERT INTO students (name, age, cgpa, student_id) VALUES ('$name', '$age', '$cgpa', '$id')";
+            $sql = "INSERT INTO Students (name, age, cgpa, student_id) VALUES ('$name', '$age', '$cgpa', '$id')";
 
             if ($conn->query($sql) === TRUE) {
                 echo "<p class='success'>New record created successfully</p>";

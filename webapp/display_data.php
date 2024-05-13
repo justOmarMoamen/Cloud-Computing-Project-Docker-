@@ -26,16 +26,16 @@
     <?php
     include 'config.php';
 
-    $sql = "SELECT id, name, age, cgpa, student_id FROM students";
+    $sql = "SELECT students_ID, name, age, cgpa, student_id FROM Students";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        echo "<table class='table table-striped'><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>CGPA</th><th>Student ID</th><th>Actions</th></tr></thead><tbody>";
+        echo "<table class='table table-striped'><thead><tr><th>Student ID</th><th>Name</th><th>Age</th><th>CGPA</th><th>Actions</th></tr></thead><tbody>";
         while ($row = $result->fetch_assoc()) {
-            echo "<tr><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["age"] . "</td><td>" . $row["cgpa"] . "</td><td>" . $row["student_id"] . "</td>
+            echo "<tr><td>" . $row["student_id"]  . "</td><td>" . $row["name"] . "</td><td>" . $row["age"] . "</td><td>" . $row["cgpa"] . "</td>
             <td class='action-buttons'>
-                <a href='update_data.php?id=" . $row["id"] . "' class='btn btn-warning btn-sm'>Update</a>
-                <a href='delete_data.php?id=" . $row["id"] . "' class='btn btn-danger btn-sm'>Delete</a>
+                <a href='update_data.php?students_ID=" . $row["students_ID"] . "' class='btn btn-warning btn-sm'>Update</a>
+                <a href='delete_data.php?students_ID=" . $row["students_ID"] . "' class='btn btn-danger btn-sm'>Delete</a>
             </td></tr>";
         }
         echo "</tbody></table>";

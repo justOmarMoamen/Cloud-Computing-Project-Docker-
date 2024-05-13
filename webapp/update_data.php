@@ -3,26 +3,35 @@ include 'config.php';
 
 $message = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST["id"];
-    $name = $_POST["name"];
-    $age = $_POST["age"];
-    $cgpa = $_POST["cgpa"];
-    $student_id = $_POST["student_id"];
+    $id = intval($_GET["students_ID"]);
+    $name = mysqli_real_escape_string($conn, $_POST["name"]);
+    $age = intval($_POST["age"]);
+    $cgpa = floatval($_POST["cgpa"]);
+    $student_id = mysqli_real_escape_string($conn, $_POST["student_id"]);
 
-    $sql = "UPDATE students SET name='$name', age='$age', cgpa='$cgpa', student_id='$student_id' WHERE id=$id";
+    // Construct the SQL query for update
+    $sql = "UPDATE Students SET name='$name', age=$age, cgpa=$cgpa WHERE students_ID=$id";
 
+    // Execute the SQL query
     if ($conn->query($sql) === TRUE) {
-        header("Location: display_data.php?message=" . urlencode("Record updated successfully"));
+        $message = "Record updated successfully";
+        header("Location: display_data.php?message=" . urlencode($message));
         exit();
     } else {
         $message = "Error updating record: " . $conn->error;
     }
 }
 
-$id = $_GET["id"];
-$sql = "SELECT * FROM students WHERE id=$id";
+$id = intval($_GET["students_ID"]);
+$sql = "SELECT * FROM Students WHERE students_ID=$id";
+
 $result = $conn->query($sql);
-$row = $result->num_rows > 0 ? $result->fetch_assoc() : null;
+
+if ($result === FALSE) {
+    $message = "Error retrieving student record: " . $conn->error;
+} else {
+    $row = $result->num_rows > 0 ? $result->fetch_assoc() : null;
+}
 
 $conn->close();
 ?>
@@ -47,8 +56,7 @@ $conn->close();
     if ($row) {
     ?>
 
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <input type="hidden" name="id" value="<?php echo $row["id"]; ?>">
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?students_ID=" . $id); ?>">
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" value="<?php echo $row["name"]; ?>" class="form-control" required>
@@ -59,7 +67,7 @@ $conn->close();
         </div>
         <div class="form-group">
             <label for="cgpa">CGPA:</label>
-            <input type="text" id="cgpa" name="cgpa" value="<?php echo $row["cgpa"]; ?>" class="form-control" required>
+            <input type="number" step="0.01" id="cgpa" name="cgpa" value="<?php echo $row["cgpa"]; ?>" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="student_id">Student ID:</label>

@@ -18,10 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $age = $_POST["age"];
     $cgpa = $_POST["cgpa"];
-    $id = $_POST["id"];
+    $id = $_POST["students_ID"];
 
     // SQL to insert data into the database
-    $sql = "INSERT INTO students (name, age, cgpa, id) VALUES ('$name', '$age', '$cgpa', '$id')";
+    $sql = "INSERT INTO Students (name, age, cgpa, students_ID) VALUES ('$name', '$age', '$cgpa', '$id')";
 
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
